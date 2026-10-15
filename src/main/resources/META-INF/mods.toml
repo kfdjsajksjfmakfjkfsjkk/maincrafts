@@ -6,7 +6,9 @@ license="MIT"
 modId="tornadomod"
 version="1.1.0"
 displayName="Tornado Mod"
-description='''Tornados EF0-EF5, huracanes, nubes volumetricas, niebla realista y radar.'''
+description='''
+Mod de tornado.
+'''
 
 [[dependencies.tornadomod]]
 modId="forge"
