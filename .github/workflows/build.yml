@@ -34,6 +34,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Fix Gradle wrapper JVM options
+        run: |
+          perl -pi -e "s/DEFAULT_JVM_OPTS=.*/DEFAULT_JVM_OPTS='-Xmx3G -Xms1G'/" gradlew
+
       - name: Build
         run: ./gradlew build --no-daemon
 
