@@ -20,31 +20,35 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+      - name: Check Gradle wrapper files
+        run: |
+          if [ ! -f gradlew ]; then
+            echo "ERROR: falta gradlew en la raiz del repo"
+            exit 1
+          fi
+
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            echo "ERROR: falta gradle/wrapper/gradle-wrapper.jar"
+            exit 1
+          fi
+
+          if [ ! -f gradle/wrapper/gradle-wrapper.properties ]; then
+            echo "ERROR: falta gradle/wrapper/gradle-wrapper.properties"
+            exit 1
+          fi
+
+      - name: Fix gradlew CRLF and permissions
+        run: |
+          sed -i 's/\r$//' gradlew
+          chmod +x gradlew
 
       - name: Build
-        shell: bash
         run: ./gradlew build
 
       - name: Show generated JARs
-        shell: bash
         run: |
           echo "JARs generados:"
           ls -lh build/libs || true
-
-      - name: Check mods.toml inside JAR
-        shell: bash
-        run: |
-          shopt -s nullglob
-          for jar in build/libs/tornadomod-*.jar; do
-            echo ""
-            echo "===== INSPECCIONANDO: $jar ====="
-            unzip -l "$jar" | head -n 120
-            echo ""
-            echo "===== META-INF/mods.toml ====="
-            unzip -p "$jar" META-INF/mods.toml || echo "FALTA META-INF/mods.toml"
-          done
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
