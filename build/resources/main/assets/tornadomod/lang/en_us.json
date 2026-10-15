@@ -1,0 +1,6 @@
+﻿{
+  "block.tornadomod.anemometer": "Anemometer",
+  "block.tornadomod.weather_station": "Weather Station",
+  "item.tornadomod.radar": "Storm Radar",
+  "itemGroup.tornadomod.tab": "Tornado Mod"
+}

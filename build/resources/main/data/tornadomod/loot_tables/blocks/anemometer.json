@@ -1,0 +1,5 @@
+﻿{
+  "type": "minecraft:block",
+  "pools": [{"rolls": 1, "bonus_rolls": 0, "entries": [{"type": "minecraft:item", "name": "tornadomod:anemometer"}],
+    "conditions": [{"condition": "minecraft:survives_explosion"}]}]
+}
