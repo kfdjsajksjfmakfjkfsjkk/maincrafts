@@ -1,1 +1,25 @@
 
+* text=auto eol=lf
+
+gradlew text eol=lf
+gradlew.bat text eol=crlf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.properties text eol=lf
+*.gradle text eol=lf
+*.gradle.kts text eol=lf
+*.java text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+
+*.jar binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ogg binary
+*.wav binary
+*.musicdisc binary
