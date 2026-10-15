@@ -20,26 +20,31 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Cache Gradle & Forge files
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.gradle/forge
-          key: gradle-forge-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-forge-${{ runner.os }}-
-
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Fix Gradle wrapper JVM options
-        run: |
-          perl -pi -e "s/DEFAULT_JVM_OPTS=.*/DEFAULT_JVM_OPTS='-Xmx3G -Xms1G'/" gradlew
-
       - name: Build
-        run: ./gradlew build --no-daemon
+        shell: bash
+        run: ./gradlew build
+
+      - name: Show generated JARs
+        shell: bash
+        run: |
+          echo "JARs generados:"
+          ls -lh build/libs || true
+
+      - name: Check mods.toml inside JAR
+        shell: bash
+        run: |
+          shopt -s nullglob
+          for jar in build/libs/tornadomod-*.jar; do
+            echo ""
+            echo "===== INSPECCIONANDO: $jar ====="
+            unzip -l "$jar" | head -n 120
+            echo ""
+            echo "===== META-INF/mods.toml ====="
+            unzip -p "$jar" META-INF/mods.toml || echo "FALTA META-INF/mods.toml"
+          done
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
